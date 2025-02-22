@@ -4,7 +4,7 @@ from models import db, User
 
 auth_bp = Blueprint("auth_bp", __name__)
 
-# ✅ User Registration (Signup)
+# User Registration (Signup)
 @auth_bp.route("/register", methods=["POST"])
 def register():
     data = request.json
@@ -26,7 +26,7 @@ def register():
 
     return jsonify({"message": "User registered successfully!"}), 201
 
-# ✅ User Login
+# User Login
 @auth_bp.route("/login", methods=["POST"])
 def login():
     data = request.json
@@ -43,7 +43,7 @@ def login():
 
     return jsonify({"error": "Invalid email or password"}), 401
 
-# ✅ Get Current User (Protected Route)
+# Get Current User (Protected Route)
 @auth_bp.route("/me", methods=["GET"])
 @jwt_required()
 def get_user():
