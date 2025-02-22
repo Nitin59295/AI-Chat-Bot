@@ -6,4 +6,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     GEMINI_API_KEY = "your Gemini key"  # Replace with your actual API key
     JWT_SECRET_KEY = "your Jwt token key"
-    JWT_ACCESS_TOKEN_EXPIRES = 3600  # ✅ Tokens expire in 1 hour
+    JWT_ACCESS_TOKEN_EXPIRES = 3600  #  Tokens expire in 1 hour
