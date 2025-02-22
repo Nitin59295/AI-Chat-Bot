@@ -10,7 +10,7 @@ routes = Blueprint("routes", __name__)
 # Configure Gemini API with correct key
 genai.configure(api_key=Config.GEMINI_API_KEY)
 
-# ✅ Serve Home Page
+# Serve Home Page
 @routes.route("/", methods=["GET"])
 def home():
     return render_template("index.html")  
@@ -26,16 +26,16 @@ def chat():
         return jsonify({"error": "Message cannot be empty"}), 400
 
     try:
-        # ✅ Retrieve the last 5 messages to provide context
+        # Retrieve the last 5 messages to provide context
         recent_chats = ChatHistory.query.filter_by(user_id=user_id).order_by(ChatHistory.timestamp.desc()).limit(5).all()
         context = "\n".join([f"User: {chat.message}\nAI: {chat.response}" for chat in reversed(recent_chats)])
 
-        # ✅ Call Gemini API with context
+        # Call Gemini API with context
         model = genai.GenerativeModel("gemini-pro")
         response = model.generate_content(f"{context}\nUser: {user_message}\nAI:")
         bot_response = response.text if response.text else "I'm not sure how to respond."
 
-        # ✅ Save chat history
+        # Save chat history
         chat_entry = ChatHistory(user_id=user_id, message=user_message, response=bot_response)
         db.session.add(chat_entry)
         db.session.commit()
@@ -45,7 +45,7 @@ def chat():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ✅ Fix 404 Error for Chat History API
+# Fix 404 Error for Chat History API
 @routes.route("/api/chat-history", methods=["GET"])
 @jwt_required()
 def chat_history():
