@@ -29,9 +29,8 @@ def chat():
         # Retrieve the last 5 messages to provide context
         recent_chats = ChatHistory.query.filter_by(user_id=user_id).order_by(ChatHistory.timestamp.desc()).limit(5).all()
         context = "\n".join([f"User: {chat.message}\nAI: {chat.response}" for chat in reversed(recent_chats)])
-
-        # Call Gemini API with context
-        model = genai.GenerativeModel("gemini-pro")
+        # ✅ Call Gemini API with context
+        model = genai.GenerativeModel("gemini-1.5-pro-latest")
         response = model.generate_content(f"{context}\nUser: {user_message}\nAI:")
         bot_response = response.text if response.text else "I'm not sure how to respond."
 
